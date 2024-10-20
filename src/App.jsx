@@ -19,7 +19,7 @@ function handleAddTodo(newTodo){
 }
   return (
     <main className="background"> 
-<TodoInput />
+<TodoInput  handleAddTodos={handleAddTodo} />
 <TodoList todos={todos}/>
     </main>
   )
