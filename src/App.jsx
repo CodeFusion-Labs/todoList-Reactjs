@@ -4,21 +4,18 @@ import { useState } from "react"
 
 function App() {
 
-const  [todos , setTodo] = useState([
-  'create an reatjs app',
-  'make unite testes',
-  'write an article about spring ioc',
-  'print stickers',
-  'go to chari3 rabat'
-])
-
+const  [todos , setTodo] = useState([])
+const  [todoValue , setTodoValue] = useState('')
 function handleAddTodos(newTodo){
   const newTodoList = [...todos , newTodo]
   setTodo(newTodoList)
 
 }
 
-function handleEditTodo (index){
+function handleEditTodo(index){
+ const  valueTobeEdited = todos[index]
+ setTodoValue(valueTobeEdited)
+ handleDeleteTodo(index)
 
 }
 
@@ -31,8 +28,8 @@ function handleDeleteTodo (index){
 }
   return (
     <main className="background"> 
-<TodoInput  handleAddTodos={handleAddTodos} />
-<TodoList handleDeleteTodo={handleDeleteTodo} todos={todos}/>
+<TodoInput  todoValue={todoValue} setTodoValue={setTodoValue} handleAddTodos={handleAddTodos} />
+<TodoList handleEditTodo={handleEditTodo} handleDeleteTodo={handleDeleteTodo} todos={todos}/>
     </main>
   )
 }
