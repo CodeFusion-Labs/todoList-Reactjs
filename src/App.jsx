@@ -1,13 +1,19 @@
 import TodoInput from "./components/TodoInput"
 import TodoList from "./components/TodoList"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 
 function App() {
 
 const  [todos , setTodo] = useState([])
 const  [todoValue , setTodoValue] = useState('')
+
+function percistData(newList){
+  localStorage.setItem('todos', JSON.stringify({todos:newList}) )
+}
+
 function handleAddTodos(newTodo){
   const newTodoList = [...todos , newTodo]
+  percistData(newTodoList)
   setTodo(newTodoList)
 
 }
@@ -20,12 +26,24 @@ function handleEditTodo(index){
 }
 
 function handleDeleteTodo (index){
-  const newTodolist = todos.filter((todo , todoIndex) => {
+  const newTodoList = todos.filter((todo , todoIndex) => {
     return todoIndex !== index
   })
-
-   setTodo(newTodolist)
+  percistData(newTodoList)
+   setTodo(newTodoList)
 }
+
+useEffect(()=>{
+  if(!localStorage){
+    return
+  }
+ let localTodos = localStorage.getItem('todos')
+ if(!localTodos){
+  return
+ }
+ localTodos = JSON.parse(localTodos).todos
+ setTodo(localTodos)
+ }, [])
   return (
     <main className="background"> 
 <TodoInput  todoValue={todoValue} setTodoValue={setTodoValue} handleAddTodos={handleAddTodos} />
